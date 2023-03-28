@@ -53,6 +53,12 @@ class Customer {
     return new Customer(customer);
   }
 
+  /** get fullname of Customer */
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+
   /** get all reservations for this customer. */
 
   async getReservations() {
