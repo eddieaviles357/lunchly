@@ -12,7 +12,7 @@ class Customer {
     this.lastName = lastName;
     this.phone = phone;
     this.notes = notes;
-  }
+  };
 
   /** find all customers. */
 
@@ -27,7 +27,7 @@ class Customer {
        ORDER BY last_name, first_name`
     );
     return results.rows.map(c => new Customer(c));
-  }
+  };
 
   /** get a customer by ID. */
 
@@ -48,22 +48,22 @@ class Customer {
       const err = new Error(`No such customer: ${id}`);
       err.status = 404;
       throw err;
-    }
+    };
 
     return new Customer(customer);
-  }
+  };
 
   /** get fullname of Customer */
   fullName() {
     return `${this.firstName} ${this.lastName}`;
-  }
+  };
 
 
   /** get all reservations for this customer. */
 
   async getReservations() {
     return await Reservation.getReservationsForCustomer(this.id);
-  }
+  };
 
   /** save this customer. */
 
@@ -82,8 +82,11 @@ class Customer {
              WHERE id=$5`,
         [this.firstName, this.lastName, this.phone, this.notes, this.id]
       );
-    }
-  }
-}
+    };
+  };
+};
+
+/** search a customer */
+
 
 module.exports = Customer;
