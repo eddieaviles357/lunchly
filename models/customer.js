@@ -84,9 +84,26 @@ class Customer {
       );
     };
   };
+  /** search a customer */
+  static async search(customer) {
+    const result = await db.query(`
+      SELECT id, 
+        first_name AS "firstName",  
+        last_name AS "lastName", 
+        phone, 
+        notes 
+      FROM customers 
+      WHERE first_name ILIKE $1 
+      OR last_name ILIKE $1 
+      ORDER BY last_name, first_name
+      `,
+      [ `%${customer}%` ]
+    );
+    return result.rows.map(c => new Customer(c));
+  }
+
 };
 
-/** search a customer */
 
 
 module.exports = Customer;
