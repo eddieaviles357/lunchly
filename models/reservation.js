@@ -16,11 +16,16 @@ class Reservation {
     this.notes = notes;
   };
   /** getters */
+  get numGuests() { return this._numGuests };
   get notes() { return this._notes };
 
   /** setters */
   set notes(val) { (val) ? this._notes = val : this._notes = '' };
-  
+  set numGuests(n) { 
+    if(n < 1) throw new Error('Must have at least one guest');
+    this._numGuests = n;
+  }
+
   /** formatter for startAt */
 
   getformattedStartAt() {
