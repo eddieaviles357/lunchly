@@ -23,8 +23,8 @@ router.get("/", async function(req, res, next) {
 router.post("/search", async function(req, res, next) {
   try {
     const { customer } = req.body;
-    const custResults = await Customer.search(customer);
-    return res.render("customer_list.html", { custResults })
+    const customers = await Customer.search(customer);
+    return res.render("customer_list.html", { customers })
   } catch (err) {
     return next(err);
   }
