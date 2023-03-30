@@ -60,7 +60,6 @@ router.post("/add/", async function(req, res, next) {
 
 /** Get top customers */
 router.get("/top", async function(req, res, next) {
-  console.log('hit top')
   try {
     const customers = await Customer.getTopCustomers("10");
     return res.render("customer_list.html", { customers });
