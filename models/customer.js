@@ -53,12 +53,6 @@ class Customer {
     return new Customer(customer);
   };
 
-  /** get fullname of Customer */
-  fullName() {
-    return `${this.firstName} ${this.lastName}`;
-  };
-
-
   /** get all reservations for this customer. */
 
   async getReservations() {
@@ -84,10 +78,18 @@ class Customer {
       );
     };
   };
+
+  /** get fullname of Customer */
+
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  };
+
   /** search a customer */
+
   static async search(customer) {
-    const result = await db.query(`
-      SELECT id, 
+    const result = await db.query(
+      `SELECT id, 
         first_name AS "firstName",  
         last_name AS "lastName", 
         phone, 
@@ -95,13 +97,30 @@ class Customer {
       FROM customers 
       WHERE first_name ILIKE $1 
       OR last_name ILIKE $1 
-      ORDER BY last_name, first_name
-      `,
+      ORDER BY last_name, first_name`,
       [ `%${customer}%` ]
     );
     return result.rows.map(c => new Customer(c));
-  }
+  };
 
+  /** get top n customers with the most reservations */
+  static async getTopCustomers(limit) {
+    const results = await db.query(
+      `SELECT c.id, 
+        c.first_name AS "firstName", 
+        c.last_name AS "lastName", 
+        c.phone, 
+        c.notes 
+      FROM reservations AS r 
+      JOIN customers c 
+      ON r.customer_id = c.id  
+      GROUP BY customer_id, c.id, "firstName", "lastName" 
+      ORDER BY COUNT(*) 
+      DESC LIMIT $1`,
+      [limit]
+    );
+    return results.rows.map( r => new Customer(r))
+  };
 };
 
 
