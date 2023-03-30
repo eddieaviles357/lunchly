@@ -15,7 +15,12 @@ class Reservation {
     this.startAt = startAt;
     this.notes = notes;
   };
+  /** getters */
+  get notes() { return this._notes };
 
+  /** setters */
+  set notes(val) { (val) ? this._notes = val : this._notes = '' };
+  
   /** formatter for startAt */
 
   getformattedStartAt() {
