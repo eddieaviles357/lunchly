@@ -18,12 +18,17 @@ class Reservation {
   /** getters */
   get numGuests() { return this._numGuests };
   get notes() { return this._notes };
+  get startAt() { return this._startAt };
 
   /** setters */
   set notes(val) { (val) ? this._notes = val : this._notes = '' };
   set numGuests(n) { 
     if(n < 1) throw new Error('Must have at least one guest');
     this._numGuests = n;
+  };
+  set startAt(dateObj) {
+    if(!(dateObj instanceof Date)) throw new Error('Must be a date obj');
+    this._startAt = dateObj;
   }
 
   /** formatter for startAt */
