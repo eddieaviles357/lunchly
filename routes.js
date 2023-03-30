@@ -18,13 +18,13 @@ router.get("/", async function(req, res, next) {
   }
 });
 
-/** Search for user */
+/** Search for customer */
 
 router.post("/search", async function(req, res, next) {
   try {
     const { customer } = req.body;
     const customers = await Customer.search(customer);
-    return res.render("customer_list.html", { customers })
+    return res.render("customer_list.html", { customers });
   } catch (err) {
     return next(err);
   }
@@ -55,6 +55,17 @@ router.post("/add/", async function(req, res, next) {
     return res.redirect(`/${customer.id}/`);
   } catch (err) {
     return next(err);
+  }
+});
+
+/** Get top customers */
+router.get("/top", async function(req, res, next) {
+  console.log('hit top')
+  try {
+    const customers = await Customer.getTopCustomers("10");
+    return res.render("customer_list.html", { customers });
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -123,5 +134,8 @@ router.post("/:id/add-reservation/", async function(req, res, next) {
     return next(err);
   }
 });
+
+
+
 
 module.exports = router;
