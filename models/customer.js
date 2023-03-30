@@ -12,7 +12,24 @@ class Customer {
     this.lastName = lastName;
     this.phone = phone;
     this.notes = notes;
+    this.fullName = {firstname: this.firstName,lastname: this.lastName};
   };
+
+  /** getters */
+  get firstName() { return this._firstName };
+  get lastName() { return this._lastName };
+  get phone() { return this._phone };
+  get notes() { return this._notes };
+  get fullName() { return this._fullName };
+
+  /** setters */
+  set firstName(txt) { (txt) ? this._firstName = txt : this._firstName = '' };
+  set lastName(txt) { (txt) ? this._lastName = txt : this._lastName = '' };
+  set phone(txt) { (txt) ? this._phone = txt : this._phone = '' };
+  set notes(txt) { (txt) ? this._notes = txt : this._notes = '' };
+  set fullName({firstname, lastname}) { 
+    this._fullName = `${firstname} ${lastname}`
+  }
 
   /** find all customers. */
 
@@ -77,12 +94,6 @@ class Customer {
         [this.firstName, this.lastName, this.phone, this.notes, this.id]
       );
     };
-  };
-
-  /** get fullname of Customer */
-
-  fullName() {
-    return `${this.firstName} ${this.lastName}`;
   };
 
   /** search a customer */
