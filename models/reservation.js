@@ -16,11 +16,16 @@ class Reservation {
     this.notes = notes;
   };
   /** getters */
+  get customerId() { return this._customerId };
   get numGuests() { return this._numGuests };
   get notes() { return this._notes };
   get startAt() { return this._startAt };
-
+  
   /** setters */
+  set customerId(cId) {
+    if(this._customerId || typeof cId !== 'number') throw new Error("Can't assign customer id");
+    this._cutomerId = cId;
+  };
   set notes(val) { (val) ? this._notes = val : this._notes = '' };
   set numGuests(n) { 
     if(n < 1) throw new Error('Must have at least one guest');
@@ -30,7 +35,7 @@ class Reservation {
     if(!(dateObj instanceof Date)) throw new Error('Must be a date obj');
     this._startAt = dateObj;
   }
-
+  
   /** formatter for startAt */
 
   getformattedStartAt() {
